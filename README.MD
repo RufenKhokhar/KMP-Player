@@ -37,9 +37,7 @@ For Kotlin Multiplatform (shared code):
 kotlin {
     sourceSets {
         commonMain.dependencies  {
-            dependencies {
-                implementation("io.github.rufenkhokhar:KMP-Player:1.0.1-beta")
-            }
+           implementation("io.github.rufenkhokhar:KMP-Player:1.0.1-beta")
         }
     }
 }
@@ -133,7 +131,7 @@ sealed interface KMPPlayerEvent {
 ## 📄 License
 
 MIT License  
-© 2025 [Rufan Khokhar](https://github.com/rufenkhokhar)
+© 2025 [Rufen Khokhar](https://github.com/rufenkhokhar)
 
 ---
 
