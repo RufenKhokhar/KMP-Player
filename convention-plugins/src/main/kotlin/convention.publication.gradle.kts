@@ -13,18 +13,20 @@ plugins {
 }
 
 // Stub secrets to let the project sync and build without the publication values set up
-ext["signing.keyId"] = null
+/*ext["signing.keyId"] = null
 ext["signing.password"] = null
 ext["signing.secretKeyRingFile"] = null
 ext["ossrhUsername"] = null
-ext["ossrhPassword"] = null
+ext["ossrhPassword"] = null*/
 
 // Grabbing secrets from local.properties file or from environment variables, which could be used on CI
 val secretPropsFile = project.rootProject.file("local.properties")
+println("local.properties file exists: ${secretPropsFile.exists()}")
 if (secretPropsFile.exists()) {
     secretPropsFile.reader().use {
         Properties().apply { load(it) }
     }.onEach { (name, value) ->
+        println("local.properties: $name=$value")
         ext[name.toString()] = value
     }
 } else {
@@ -44,9 +46,11 @@ fun getExtraString(name: String) = ext[name]?.toString()
 publishing {
     // Configure maven central repository
     repositories {
-        maven("https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-            name = "sonatype"
+        maven("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/") {
+            name = "ossrh-staging-api"
             credentials {
+                println("ossrhUsername: ${getExtraString("ossrhUsername")}")
+                println("ossrhPassword: ${getExtraString("ossrhPassword")}")
                 username = getExtraString("ossrhUsername")
                 password = getExtraString("ossrhPassword")
             }

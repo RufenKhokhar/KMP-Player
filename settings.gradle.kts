@@ -28,7 +28,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-includeBuild("convention-plugins")
 include(":kmpplayer")
 include(":sample:composeApp")
 
