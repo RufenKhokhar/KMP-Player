@@ -1,4 +1,3 @@
-//import com.vanniktech.maven.publish.SonatypeHost
 
 plugins {
     alias(libs.plugins.multiplatform)
@@ -9,7 +8,7 @@ plugins {
 }
 
 group = "io.github.rufenkhokhar"
-version = "1.0.0"
+version = "1.0.1"
 
 kotlin {
     jvmToolchain(21)
@@ -60,7 +59,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.rufenkhokhar",
         artifactId = "KMP-Player",
-        version = "1.0.0-beta"
+        version = "1.0.1-beta"
     )
     pom {
         name.set("KMP-Player")
@@ -86,6 +85,7 @@ mavenPublishing {
             url.set("https://github.com/rufenkhokhar/KMP-Player")
         }
     }
-   // publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    //publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    publishToMavenCentral()
     signAllPublications()
 }
