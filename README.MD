@@ -20,7 +20,7 @@
 
 ### 1. Add Maven Repository
 
-If published to **Maven Central**:
+published to **Maven Central**:
 
 ```kotlin
 repositories {
