@@ -5,12 +5,16 @@ package io.github.rufenkhokhar
  * These events are used to communicate the state of the media player
  * to the application.
  */
+
 sealed interface KMPPlayerEvent {
 
     /**
      * Indicates that the player has started or resumed playback.
+     * This event provides the current playback position and the total duration of the media.
+     * @param currentPosition The current playback position in milliseconds.
+     * @param duration The total duration of the media in milliseconds.
      */
-    data object Playing: KMPPlayerEvent
+    data class Playing(val currentPosition: Long = 0L, val duration: Long = 0L): KMPPlayerEvent
 
     /**
      * Indicates that the player has been paused.

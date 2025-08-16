@@ -78,4 +78,54 @@ interface KMPPlayerState {
      * Should be called when the player is no longer needed to avoid memory leaks.
      */
     fun destroy()
+
+    /**
+     * Sets the playback volume of the player.
+     *
+     * @param volume The desired volume level, typically ranging from 0.0 (silent) to 1.0 (maximum volume).
+     *               Values outside this range may be clamped by the underlying platform player.
+     */
+    fun setVolume(volume: Float)
+
+    /**
+     * Retrieves the current playback volume of the player.
+     *
+     * @return The current volume level, typically ranging from 0.0 (silent) to 1.0 (maximum volume).
+     */
+    fun getVolume(): Float
+
+    /**
+     * Sets the playback speed (rate) of the player.
+     *
+     * @param speed The desired playback speed. For example, 1.0f is normal speed, 0.5f is half speed,
+     *              and 2.0f is double speed. The supported range of speeds may vary by platform.
+     */
+    fun setPlaybackSpeed(speed: Float)
+
+    /**
+     * Retrieves the current playback position (timestamp) of the media.
+     *
+     * @return The current playback position in milliseconds.
+     */
+    fun getCurrentPosition(): Long
+
+
+    /**
+     * Retrieves the total duration of the current media.
+     *
+     * @return The total duration of the media in milliseconds. Returns 0 if no media is loaded or
+     *         the duration is unknown.
+     */
+    fun getDuration(): Long
+
+    /**
+     * Seeks the playback to a specified position (timestamp) in the media.
+     *
+     * @param position The target position to seek to, in milliseconds.
+     */
+    fun seekTo(position: Long)
+
+
+
+
 }

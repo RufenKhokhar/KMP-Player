@@ -4,13 +4,21 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMultiplatform::class)
 internal class AndroidKMPPlayerState(private val exoPlayer: ExoPlayer) : KMPPlayerState,
     Player.Listener {
+
+    private var progressUpdateJob: Job? = null
     private val playerEvent = MutableStateFlow<KMPPlayerEvent>(KMPPlayerEvent.Ideal)
 
     init {
@@ -45,9 +53,9 @@ internal class AndroidKMPPlayerState(private val exoPlayer: ExoPlayer) : KMPPlay
 
     override fun onIsPlayingChanged(isPlaying: Boolean) {
         if (isPlaying) {
-            playerEvent.update {
-                KMPPlayerEvent.Playing
-            }
+            startUpdateProgress()
+        } else {
+            stopUpdateProgress()
         }
     }
 
@@ -103,6 +111,45 @@ internal class AndroidKMPPlayerState(private val exoPlayer: ExoPlayer) : KMPPlay
     override fun destroy() {
         stop()
         exoPlayer.release()
+    }
+
+    override fun setVolume(volume: Float) {
+        exoPlayer.volume = volume
+    }
+
+    override fun getVolume(): Float {
+        return exoPlayer.volume
+    }
+
+    override fun setPlaybackSpeed(speed: Float) {
+        exoPlayer.setPlaybackSpeed(speed)
+    }
+
+    override fun getCurrentPosition(): Long {
+        return exoPlayer.currentPosition
+    }
+
+    override fun getDuration(): Long {
+        return exoPlayer.duration
+    }
+
+    override fun seekTo(position: Long) {
+        exoPlayer.seekTo(position)
+    }
+
+    private fun startUpdateProgress() {
+        progressUpdateJob = CoroutineScope(Dispatchers.Main).launch {
+            while (isActive) {
+                playerEvent.update {
+                    KMPPlayerEvent.Playing(getCurrentPosition(), getDuration())
+                }
+                delay(100)
+            }
+        }
+    }
+
+    private fun stopUpdateProgress() {
+        progressUpdateJob?.cancel()
     }
 
 

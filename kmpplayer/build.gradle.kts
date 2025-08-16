@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "io.github.rufenkhokhar"
-version = "1.0.1"
+version = "1.0.2"
 
 kotlin {
     jvmToolchain(21)
@@ -48,7 +48,7 @@ kotlin {
 
 android {
     namespace = "io.github.rufenkhokhar"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 21
@@ -59,7 +59,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.rufenkhokhar",
         artifactId = "KMP-Player",
-        version = "1.0.1-beta"
+        version = "1.0.2-beta"
     )
     pom {
         name.set("KMP-Player")
