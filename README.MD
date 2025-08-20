@@ -49,7 +49,7 @@ For Kotlin Multiplatform (shared code):
 kotlin {
     sourceSets {
         commonMain.dependencies  {
-           implementation("io.github.rufenkhokhar:KMP-Player:1.0.1-beta")
+           implementation("io.github.rufenkhokhar:KMP-Player:+")
         }
     }
 }
@@ -59,7 +59,7 @@ Or for Android-only usage:
 
 ```kotlin
 dependencies {
-    implementation("io.github.rufenkhokhar:KMP-Player:1.0.1-beta")
+    implementation("io.github.rufenkhokhar:KMP-Player:+")
 }
 ```
 
